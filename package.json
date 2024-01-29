@@ -9,9 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chrome-location": "^1.2.1",
     "discord-webhook-node": "^1.1.8",
     "got": "^11.8.6",
     "node-html-parser": "^6.1.12",
-    "prompt-sync": "^4.2.0"
+    "prompt-sync": "^4.2.0",
+    "puppeteer": "^21.9.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
   }
 }

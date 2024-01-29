@@ -7,7 +7,7 @@ const prompt = require('prompt-sync')();
 
 // const productLink = 'https://www.youngla.com/products/514, https://www.youngla.com/products/204?variant=42580068499644'
 
-const hook = new Webhook("Enter ur discord server webhook url here");
+const hook = new Webhook("https://discord.com/api/webhooks/1197264370074402906/Qhlmmw1Q8kjnx664KmLlLEEP3aqNfgXi1lg2phjBSdYiknRNHW5-eLFAs7h5jsBQOg-7");
 const embed = new MessageBuilder()
 .setTitle('YoungLA Monitor')
 .setColor('#90ee90')
