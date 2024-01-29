@@ -8,6 +8,7 @@ puppeteer.use(StealthPlugin());
 
 async function payment(page) {
 
+    // Enter your card info here
     await page.waitForSelector("iframe[title='Field container for: Card number']")
     await page.waitForTimeout(2000)
 
@@ -42,16 +43,17 @@ async function checkout(page) {
     await page.waitForTimeout(1500);
     await page.select("#checkout_shipping_address_province", "Indiana");
 
+    // Enter your Info here and uncommment anything if needed
     await page.evaluate(() => {
         document.getElementById('checkout_email').value = "email@gmail.com"
         document.getElementById('checkout_shipping_address_first_name').value = "FirstName"
-        document.getElementById('checkout_shipping_address_last_name').value = "Shrivastava"
-        document.getElementById('checkout_shipping_address_address1').value = "212 W Fowler Ave"
-        //document.getElementById('checkout_shipping_address_address2').value = "Apt: 212A"
-        document.getElementById('checkout_shipping_address_city').value = "West Lafayette"
+        document.getElementById('checkout_shipping_address_last_name').value = "LastName"
+        document.getElementById('checkout_shipping_address_address1').value = "AddressLine1"
+        //document.getElementById('checkout_shipping_address_address2').value = "AddressLine2"
+        document.getElementById('checkout_shipping_address_city').value = "City"
         document.getElementById('checkout_shipping_address_province').value = "IN"; // Select State (XX form) Ex. IN
-        document.getElementById('checkout_shipping_address_zip').value = "47906";
-        document.getElementById('checkout_shipping_address_phone').value = "9197609010";
+        document.getElementById('checkout_shipping_address_zip').value = "12345";
+        document.getElementById('checkout_shipping_address_phone').value = "123456789";
     })
 
     // apply discount code
