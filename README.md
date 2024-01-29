@@ -4,3 +4,4 @@ This application helps you monitor any product that you are looking for on the Y
 
 With npm pkg I have made it available for any user to use this app on MacOS, Linux, or Windows as they simply just need to paste all the links they want to monitor (separated by commas).# YLABot
 # YLABot
+# YLAStockMonitor
