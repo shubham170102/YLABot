@@ -44,7 +44,7 @@ async function checkout(page) {
 
     await page.evaluate(() => {
         document.getElementById('checkout_email').value = "email@gmail.com"
-        document.getElementById('checkout_shipping_address_first_name').value = "Shubham"
+        document.getElementById('checkout_shipping_address_first_name').value = "FirstName"
         document.getElementById('checkout_shipping_address_last_name').value = "Shrivastava"
         document.getElementById('checkout_shipping_address_address1').value = "212 W Fowler Ave"
         //document.getElementById('checkout_shipping_address_address2').value = "Apt: 212A"
