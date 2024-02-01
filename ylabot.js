@@ -34,9 +34,11 @@ async function payment(page) {
 }
 
 async function checkout(page) {
+    await page.waitForTimeout(1500);
     await page.evaluate(() => {
-        // document.querySelectorAll('button[data-testid="sheet-open-button"]')[0].click()  
-        document.querySelectorAll('button[class="Cart__Checkout Button Button--primary Button--full"]')[0].click()  
+        // document.querySelectorAll('button[data-testid="sheet-open-button"]')[0].click() 
+        document.querySelector('button[name="checkout"]').click()  
+        //document.querySelectorAll('button[class="Cart__Checkout Button Button--primary Button--full"]')[0].click()  
     })
 
     await page.waitForSelector('#checkout_shipping_address_province');
@@ -46,14 +48,14 @@ async function checkout(page) {
     // Enter your Info here and uncommment anything if needed
     await page.evaluate(() => {
         document.getElementById('checkout_email').value = "email@gmail.com"
-        document.getElementById('checkout_shipping_address_first_name').value = "FirstName"
-        document.getElementById('checkout_shipping_address_last_name').value = "LastName"
-        document.getElementById('checkout_shipping_address_address1').value = "AddressLine1"
+        document.getElementById('checkout_shipping_address_first_name').value = "Shivi"
+        document.getElementById('checkout_shipping_address_last_name').value = "Ranganathan"
+        document.getElementById('checkout_shipping_address_address1').value = "212 W fowler Ave"
         //document.getElementById('checkout_shipping_address_address2').value = "AddressLine2"
-        document.getElementById('checkout_shipping_address_city').value = "City"
+        document.getElementById('checkout_shipping_address_city').value = "West Lafayette"
         document.getElementById('checkout_shipping_address_province').value = "IN"; // Select State (XX form) Ex. IN
-        document.getElementById('checkout_shipping_address_zip').value = "12345";
-        document.getElementById('checkout_shipping_address_phone').value = "123456789";
+        document.getElementById('checkout_shipping_address_zip').value = "47906";
+        document.getElementById('checkout_shipping_address_phone').value = "9197609010";
     })
 
     // apply discount code
@@ -163,7 +165,7 @@ async function monitorAndCheckout(browser, productLink, colorChoice, sizeChoice)
 
 async function run() {
     const browser = await puppeteer.launch({ headless: false, executablePath: localChrome });
-    let page = browser.newPage();
+    let page = await browser.newPage();
     
     let inputLinks = prompt('Enter product links separated by commas: ');
     let productLinks = inputLinks.split(',').map(link => link.trim());
@@ -181,5 +183,8 @@ async function run() {
     await checkout(page); // Proceed to checkout after all items are added to the cart
     //await browser.close();
 }
+
+
+// GhostCursor Item
 
 run();
