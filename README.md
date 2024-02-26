@@ -12,6 +12,8 @@ This bot is fairly easy to use as you simply run the `yla.js` file with the comm
 
 `npm install discord-webhook-node`
 
+`npm install prompt-sync`
+
 With `npm pkg` I have made it available for any user to use this app on MacOS, Linux, or Windows as they simply just need to paste all the links they want to monitor (separated by commas).
 
 ## CheckOut Bot
