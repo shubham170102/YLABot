@@ -33,3 +33,13 @@ Once done enter your Credit/debit Card info in the `payment` function and your p
 This bot helps you checkout products from your desired link(s) and for each link enter the color and size of your choice (could be helpful if you look at the color that store offers initially) and if there any product that doesn't exist or is out of stock the program will let you know about the availabilty of that product.
 
 Once ready to try this bot, simply run `ylabot.js` and you should be good to go!
+
+## Request Bot
+
+Want to check out multiple orders even faster, I meanlike within seconds, without your browser clicking through your options? Well then, just run `node ylarequestbot.js` and watch all your order to be processed and checkout even faster using HTTP requests and node-fetch. 
+
+For this make you have the packages installed from the CheckOut Bot, and additionally to that install the node-fetch plugin:
+
+`npm install node-fetch@2`
+
+Once done, make sure to add all the links you want to run at the same within the `linksToRun` array (comma separated). Make sure to add your address and payment details correctly. Now you should be good to go!
