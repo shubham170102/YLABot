@@ -11,7 +11,9 @@
   "dependencies": {
     "chrome-location": "^1.2.1",
     "discord-webhook-node": "^1.1.8",
+    "fs": "^0.0.1-security",
     "got": "^11.8.6",
+    "node-fetch": "^2.7.0",
     "node-html-parser": "^6.1.12",
     "prompt-sync": "^4.2.0",
     "puppeteer": "^21.9.0",
