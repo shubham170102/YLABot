@@ -7,7 +7,10 @@ puppeteer.use(StealthPlugin());
 //productUrl = 'https://www.youngla.com/products/4075';
 
 async function run(productUrl) {
-    const browser = await puppeteer.launch({ headless: false, executablePath: localChrome });
+    const browser = await puppeteer.launch({ headless: false, executablePath: localChrome, args: [
+        '--start-maximized',
+        '--window-size=1920,1080', 
+    ] });
     const page = await browser.newPage();
     console.log("Navigating to this product: " + productUrl);
     await page.goto(productUrl);
@@ -206,14 +209,14 @@ async function checkoutProduct(page) {
 
     // Enter your Info here and uncommment anything if needed
     await page.evaluate(() => {
-        document.getElementById('checkout_email').value = "email@gmail.com"
-        document.getElementById('checkout_shipping_address_first_name').value = "Bot"
-        document.getElementById('checkout_shipping_address_last_name').value = "Maker"
-        document.getElementById('checkout_shipping_address_address1').value = "212 W Fowler Ave"
+        document.getElementById('checkout_email').value = "thonmaker344@gmail.com"
+        document.getElementById('checkout_shipping_address_first_name').value = "Sedrick"
+        document.getElementById('checkout_shipping_address_last_name').value = "Will"
+        document.getElementById('checkout_shipping_address_address1').value = "940 Blanda Valleys Apt. 478"
         //document.getElementById('checkout_shipping_address_address2').value = "AddressLine2"
-        document.getElementById('checkout_shipping_address_city').value = "West Lafayette"
-        document.getElementById('checkout_shipping_address_province').value = "IN"; // Select State (XX form) Ex. IN
-        document.getElementById('checkout_shipping_address_zip').value = "47906";
+        document.getElementById('checkout_shipping_address_city').value = "Lindshire"
+        document.getElementById('checkout_shipping_address_province').value = "MO"; // Select State (XX form) Ex. IN
+        document.getElementById('checkout_shipping_address_zip').value = "63013";
         document.getElementById('checkout_shipping_address_phone').value = "2029182132";
     })
 
@@ -269,7 +272,9 @@ async function payment(page) {
 
 const linksToRun = [
     "https://www.youngla.com/products/4075",
-    "https://www.youngla.com/products/229"
+    "https://www.youngla.com/products/401-essential-jacked-tees-23",
+    "https://www.youngla.com/products/233-loose-printed-joggers",
+    "https://www.youngla.com/products/465-compression-tee"
 ];
 
 const runPromises = linksToRun.map(productUrl => run(productUrl));
@@ -284,3 +289,4 @@ Promise.all(runPromises)
 
 
 
+    
