@@ -2,20 +2,38 @@ const puppeteer = require('puppeteer-extra')
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fetch = require('node-fetch');
 const localChrome = require('chrome-location');
+const express = require('express');
+const cors = require('cors')
+const bodyParser = require('body-parser');
 puppeteer.use(StealthPlugin());
 
-//productUrl = 'https://www.youngla.com/products/4075';
+let productLinkparameter = '';
 
-async function run(productUrl) {
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+app.listen(8080, () => console.log("app is running"));
+app.post('/api/start', (req, res) => {
+    let {link} = req.body;
+    link = link.trim();
+    if (!link) {
+        return res.status(400).json({ error: 'Link are required fields.' });
+    }
+    res.json({ "message": "Form Submitted" });
+    productLinkparameter = link;
+    run();
+})
+
+async function run() {
     const browser = await puppeteer.launch({ headless: false, executablePath: localChrome, args: [
         '--start-maximized',
         '--window-size=1920,1080', 
     ] });
     const page = await browser.newPage();
-    console.log("Navigating to this product: " + productUrl);
-    await page.goto(productUrl);
-    await addToCartRequest(page, productUrl);
-    const cartResponse = await cartRequest(page, productUrl);
+    console.log("Navigating to this product: " + productLinkparameter);
+    await page.goto(productLinkparameter);
+    await addToCartRequest(page, productLinkparameter);
+    const cartResponse = await cartRequest(page, productLinkparameter);
     const checkoutPageUrl = getCheckoutPageUrl(cartResponse);
     if (checkoutPageUrl) {
         try {
@@ -270,22 +288,22 @@ async function payment(page) {
 
 //run();
 
-const linksToRun = [
-    "https://www.youngla.com/products/4075",
-    "https://www.youngla.com/products/401-essential-jacked-tees-23",
-    "https://www.youngla.com/products/233-loose-printed-joggers",
-    "https://www.youngla.com/products/465-compression-tee"
-];
+// const linksToRun = [
+//     "https://www.youngla.com/products/4075",
+//     "https://www.youngla.com/products/401-essential-jacked-tees-23",
+//     "https://www.youngla.com/products/233-loose-printed-joggers",
+//     "https://www.youngla.com/products/465-compression-tee"
+// ];
 
-const runPromises = linksToRun.map(productUrl => run(productUrl));
+// const runPromises = linksToRun.map(productUrl => run(productUrl));
 
-Promise.all(runPromises)
-    .then(() => {
-        console.log("All instances completed successfully.");
-    })
-    .catch(error => {
-        console.error("An error occurred:", error);
-    });
+// Promise.all(runPromises)
+//     .then(() => {
+//         console.log("All instances completed successfully.");
+//     })
+//     .catch(error => {
+//         console.error("An error occurred:", error);
+//     });
 
 
 
