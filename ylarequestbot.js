@@ -5,6 +5,8 @@ const localChrome = require('chrome-location');
 const express = require('express');
 const cors = require('cors')
 const bodyParser = require('body-parser');
+const runningTasks = new Map();
+
 puppeteer.use(StealthPlugin());
 
 let productLinkparameter = '';
@@ -13,8 +15,9 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.listen(8080, () => console.log("app is running"));
+
 app.post('/api/start', (req, res) => {
-    let {link} = req.body;
+    let { link } = req.body;
     link = link.trim();
     if (!link) {
         return res.status(400).json({ error: 'Link are required fields.' });
@@ -22,14 +25,40 @@ app.post('/api/start', (req, res) => {
     res.json({ "message": "Form Submitted" });
     productLinkparameter = link;
     run();
-})
+});
+
+app.post('/api/stop', (req, res) => {
+    const { id } = req.body;
+
+    // Find the task with the given ID
+    const task = runningTasks.get(id);
+
+    if (task) {
+        // Assuming 'task' is a reference to a Puppeteer Page or Browser object
+        task.browser.close().then(() => {
+            console.log(`Task ${id} has been stopped.`);
+            runningTasks.delete(id); // Remove task from the running tasks map
+            res.json({ message: 'Task stopped successfully.' });
+        }).catch(error => {
+            console.error(`Failed to stop task ${id}: `, error);
+            res.status(500).json({ error: 'Failed to stop task.' });
+        });
+    } else {
+        res.status(404).json({ error: 'Task not found.' });
+    }
+});
 
 async function run() {
-    const browser = await puppeteer.launch({ headless: false, executablePath: localChrome, args: [
-        '--start-maximized',
-        '--window-size=1920,1080', 
-    ] });
+    const browser = await puppeteer.launch({
+        headless: false, executablePath: localChrome, args: [
+            '--start-maximized',
+            '--window-size=1920,1080',
+        ]
+    });
     const page = await browser.newPage();
+    // Store a reference to the browser using the task ID, so you can close it later
+    const taskId = Date.now(); // Generate a unique ID for the task
+    runningTasks.set(taskId, { browser, page });
     console.log("Navigating to this product: " + productLinkparameter);
     await page.goto(productLinkparameter);
     await addToCartRequest(page, productLinkparameter);
@@ -44,8 +73,9 @@ async function run() {
     } else {
         console.log("Checkout URL was not found or is invalid.");
     }
-    await checkoutProduct(page);
-
+    await checkoutProduct(page, productLinkparameter);
+    // After the task is done, don't forget to remove it from the runningTasks map
+    runningTasks.delete(taskId);
 }
 
 function getCheckoutPageUrl(cartRequestResponse) {
@@ -256,10 +286,10 @@ async function checkoutProduct(page) {
     await page.waitForSelector("#continue_button")
     await page.evaluate(() => document.getElementById('continue_button').click());
 
-    await payment(page);
+    await payment(page, productLinkparameter);
 }
 
-async function payment(page) {
+async function payment(page, productLinkparameter) {
 
     // Enter your card info here
     await page.waitForSelector("iframe[title='Field container for: Card number']")
@@ -283,6 +313,7 @@ async function payment(page) {
 
     await page.waitForTimeout(1000)
     await page.evaluate(() => document.getElementById('continue_button').click()); // last step
+    console.log("All set your order for " + productLinkparameter + " was placed!!")
 }
 
 
@@ -304,7 +335,3 @@ async function payment(page) {
 //     .catch(error => {
 //         console.error("An error occurred:", error);
 //     });
-
-
-
-    
