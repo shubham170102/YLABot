@@ -1,0 +1,35 @@
+{
+  "name": "stockmonitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "yla.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "chrome-location": "^1.2.1",
+    "cors": "^2.8.5",
+    "discord-webhook-node": "^1.1.8",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "ghost-cursor": "^1.2.0",
+    "got": "^11.8.6",
+    "http": "^0.0.1-security",
+    "node-fetch": "^2.7.0",
+    "node-html-parser": "^6.1.12",
+    "prompt-sync": "^4.2.0",
+    "puppeteer": "^21.9.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "socket.io": "^4.7.5",
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.1"
+  }
+}
