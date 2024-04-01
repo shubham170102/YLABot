@@ -250,11 +250,6 @@ async function addToCartRequest(page, productUrl) {
 }
 
 async function checkoutProduct(page) {
-    await page.waitForTimeout(1000);
-    await page.waitForSelector('#checkout_shipping_address_province');
-    await page.waitForTimeout(1000);
-    await page.select("#checkout_shipping_address_province", "Indiana");
-
     // Enter your Info here and uncommment anything if needed
     await page.evaluate(() => {
         document.getElementById('checkout_email').value = "thonmaker344@gmail.com"
@@ -282,7 +277,6 @@ async function checkoutProduct(page) {
     await page.evaluate(() => document.getElementById('btn-proceed-address').click());
 
     // continue to estimate shipping date
-    await page.waitForTimeout(1000)
     await page.waitForSelector("#continue_button")
     await page.evaluate(() => document.getElementById('continue_button').click());
 
